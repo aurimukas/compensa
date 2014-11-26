@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load bootstrap_themes compressed account i18n %}
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>SOAP service requests | {% block head_title %}{% endblock %}</title>
+
+    <!-- Styles -->
+    {% block stylesheets %}
+        {% bootstrap_styles theme='simplex' type='min.css' %}
+        {% compressed_css 'com_local' %}
+    {% endblock stylesheets %}
+
+    {% block header_js %}
+        {% compressed_js 'jquery' %}
+    {% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'com_local:home' %}">Compensa requests app</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'com_local:home' %}">Home</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        {% user_display user as user_display %}
+                        <a href data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="true">
+                            {% blocktrans %}Hi {{ user_display }}{% endblocktrans %}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li>
+                                <a href="{% url 'account_logout' %}">{% trans 'Sign Out' %}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block footer_js %}
+        {% bootstrap_script use_min=True %}
+    {% endblock %}
+</body>
+</html>

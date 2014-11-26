@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags compressed eztables %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    {% datatables_bootstrap_css %}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% crispy form form.helper %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="requests-list" class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer_js %}
+    {{ block.super }}
+    {% datatables_js %}
+    {% datatables_bootstrap_js %}
+
+    <script>
+        $(document).ready(function() {
+            $('#requests-list').dataTable({
+                "bPaginate": true,
+                "sPaginationType": "bootstrap",
+                "bScrollCollapse": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{% url 'com_local:request_list' %}",
+                "aoColumns": [
+                    { "mData": "code" },
+                    { "mData": "created" },
+                    { "mData": "updated" }
+                ]
+            });
+        });
+    </script>
+{% endblock %}
