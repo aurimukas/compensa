@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags compressed eztables %}
+{% load crispy_forms_tags compressed %}
 
 {% block stylesheets %}
     {{ block.super }}
@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <table id="requests-list" class="table table-condensed table-striped">
+            <table id="requests-list" class="table table-condensed table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Code</th>
@@ -22,31 +22,13 @@
                         <th>Updated</th>
                     </tr>
                 </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
 {% endblock content %}
 
-{% block footer_js %}
+{% block footer_extra_js %}
     {{ block.super }}
-    {% datatables_js %}
-    {% datatables_bootstrap_js %}
-
-    <script>
-        $(document).ready(function() {
-            $('#requests-list').dataTable({
-                "bPaginate": true,
-                "sPaginationType": "bootstrap",
-                "bScrollCollapse": true,
-                "bProcessing": true,
-                "bServerSide": true,
-                "sAjaxSource": "{% url 'com_local:request_list' %}",
-                "aoColumns": [
-                    { "mData": "code" },
-                    { "mData": "created" },
-                    { "mData": "updated" }
-                ]
-            });
-        });
-    </script>
+    {% js "com_local/js/homepage_table.js" %}
 {% endblock %}

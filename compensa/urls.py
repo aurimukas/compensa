@@ -10,6 +10,8 @@ urlpatterns = patterns('',
 
     url(r'^accounts/', include('allauth.urls')),
 
+    url(r'^djangojs/', include('djangojs.urls')),
+
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 )

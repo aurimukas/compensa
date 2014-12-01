@@ -1,20 +1,24 @@
 from __future__ import absolute_import
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
+from django.db.models import Q
 
 from .forms import RequestForm
 from .models import Car, Request
 from .tasks import get_car_data
 
+from django_datatables_view.base_datatable_view import BaseDatatableView
+
 from eztables.views import DatatablesView
 from django.template import add_to_builtins
 
 add_to_builtins('eztables.templatetags.eztables')
+add_to_builtins('djangojs.templatetags.js')
 
 @login_required()
 def index(request):
@@ -68,6 +72,7 @@ class RequestsView(LoginRequiredMixin, DatatablesView):
     model = Request
     fields = {
         'code': 'code',
+        #'absolute_url': 'absolute_url',
         'created': 'created',
         'updated': 'updated',
     }
@@ -76,6 +81,26 @@ class RequestsView(LoginRequiredMixin, DatatablesView):
         return HttpResponse(
             JsonResponse(data)
         )
+
+
+class RequestsViewJson(LoginRequiredMixin, BaseDatatableView):
+
+    model = Request
+    columns = ['code', 'created', 'updated']
+    order_columns = ['code', 'created', 'updated']
+
+    max_display_length = 500
+
+    def filter_queryset(self, qs):
+            # use parameters passed in POST request to filter queryset
+
+            # simple example:
+            search = self.request.POST.get('search[value]', None)
+            print 'search', search
+            if search:
+                qs = qs.filter(code__istartswith=search)
+
+            return qs
 
 
 def _run_cars_data_update_tasks(req):

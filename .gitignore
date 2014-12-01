@@ -58,3 +58,4 @@ media/uploads
 tmp
 compensa/settings/local*
 .DS_Store
+.sass-cache

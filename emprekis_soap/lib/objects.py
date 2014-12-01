@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from .cypher import CompensaEncryption
 from suds.client import Client
 
@@ -40,18 +42,30 @@ class Region:
 
 class MotorInsurance(object):
     cypher = None
-    service_user = '80873'
-    service_pass = '97F4F4'
+    service_user = ''
+    service_pass = ''
     crypted_user = None
     crypted_pass = None
-    service_address = 'http://testservices.compensa.lt:8085/Legacy/MotorInsuranceService.asmx?wsdl'
+    service_address = ''
     client = None
 
     def __init__(self, user=None, pwd=None, service=None):
         self.init_cypher()
-        self.service_user = user if user else self.service_user
-        self.service_pass = pwd if pwd else self.service_pass
-        self.service_address = service if service else self.service_address
+        if not user:
+            self.service_user = settings['EMPREKIS_SOAP_USER'] if 'EMPREKIS_SOAP_USER' in settings else ''
+        else:
+            self.service_user = user
+
+        if not pwd:
+            self.service_pass = settings['EMPREKIS_SOAP_PASS'] if 'EMPREKIS_SOAP_PASS' in settings else ''
+        else:
+            self.service_pass = pwd
+
+        if not service:
+            self.service_address = settings['EMPREKIS_SOAP_URL'] if 'EMPREKIS_SOAP_URL' in settings else ''
+        else:
+            self.service_address = service
+
 
     def init_cypher(self):
         if not self.cypher:

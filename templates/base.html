@@ -14,7 +14,7 @@
     {% endblock stylesheets %}
 
     {% block header_js %}
-        {% compressed_js 'jquery' %}
+        {% compressed_js 'html5' %}
     {% endblock %}
 </head>
 <body>
@@ -70,7 +70,10 @@
     </div>
 
     {% block footer_js %}
+        {% django_js %}
         {% bootstrap_script use_min=True %}
+        {% compressed_js 'datatables' %}
     {% endblock %}
+    {% block footer_extra_js %}{% endblock footer_extra_js %}
 </body>
 </html>

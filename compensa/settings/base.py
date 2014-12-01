@@ -51,6 +51,7 @@ THIRD_PARTIES_APPS = (
     'crispy_forms',
     'taggit',
     'eztables',
+    'djangojs',
 )
 
 CUSTOM_APPS = (

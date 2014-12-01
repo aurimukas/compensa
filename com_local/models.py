@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
@@ -25,6 +26,18 @@ class Request(models.Model):
 
     def __unicode__(self):
         return unicode(_("User: %s, Requested for code: %s" % (self.user, self.code)))
+
+
+
+    def get_absolute_url(self):
+        """
+            return and absolute url to object
+        """
+        return reverse('com_local:request_cars', kwargs={ 'pk': self.id })
+
+    @property
+    def absolute_url(self):
+        return self.get_absolute_url()
 
     def get_requested_cars(self):
         reg_numbers = self.requested_reg_numbers.all()
