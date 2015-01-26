@@ -52,17 +52,17 @@ class MotorInsurance(object):
     def __init__(self, user=None, pwd=None, service=None):
         self.init_cypher()
         if not user:
-            self.service_user = settings['EMPREKIS_SOAP_USER'] if 'EMPREKIS_SOAP_USER' in settings else ''
+            self.service_user = settings.EMPREKIS_SOAP_USER if hasattr(settings, 'EMPREKIS_SOAP_USER') else ''
         else:
             self.service_user = user
 
         if not pwd:
-            self.service_pass = settings['EMPREKIS_SOAP_PASS'] if 'EMPREKIS_SOAP_PASS' in settings else ''
+            self.service_pass = settings.EMPREKIS_SOAP_PASS if hasattr(settings, 'EMPREKIS_SOAP_PASS') else ''
         else:
             self.service_pass = pwd
 
         if not service:
-            self.service_address = settings['EMPREKIS_SOAP_URL'] if 'EMPREKIS_SOAP_URL' in settings else ''
+            self.service_address = settings.EMPREKIS_SOAP_URL if hasattr(settings, 'EMPREKIS_SOAP_URL') else ''
         else:
             self.service_address = service
 
@@ -89,7 +89,7 @@ class MotorInsurance(object):
 
     def GetCarOwnerData(self, NumberType=None, PersonalCode='', VehicleNumber="",
                         PersonType=0, IsSearch=False):
-        print "vehicle nr {0}".format(VehicleNumber), "type: {0}".format(type(VehicleNumber))
+        #print "vehicle nr {0}".format(VehicleNumber), "type: {0}".format(type(VehicleNumber))
         client = self.create_client()
         vehicleNumberType = client.factory.create('VehicleNumberType')
 

@@ -15,7 +15,7 @@ class Command(BaseCommand):
         ins_car = data.Data.Contract.Car
 
         if ins_car:
-            print ins_car
+            #print ins_car
             car = Car()
             car.car_reg = motor.decrypt(ins_car.RegistrationNumber)
             car.production_year = ins_car.ProductionYear

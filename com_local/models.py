@@ -135,7 +135,7 @@ class Car(models.Model):
         car = None
         try:
             data = motor.GetCarOwnerData(PersonalCode=self.request.code, VehicleNumber=self.car_reg)
-            print data
+            #print data
             if 'ErrorMessage' in data:
                 print "Error in SOAP request,", data.ErrorMessage
                 self.status = self.STATUS_ERROR

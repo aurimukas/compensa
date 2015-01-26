@@ -96,7 +96,7 @@ class RequestsViewJson(LoginRequiredMixin, BaseDatatableView):
 
             # simple example:
             search = self.request.POST.get('search[value]', None)
-            print 'search', search
+            #print 'search', search
             if search:
                 qs = qs.filter(code__istartswith=search)
 
@@ -105,7 +105,7 @@ class RequestsViewJson(LoginRequiredMixin, BaseDatatableView):
 
 def _run_cars_data_update_tasks(req):
     reg_numbers = req.requested_reg_numbers.all()
-    print reg_numbers
+    #print reg_numbers
 
     if not len(reg_numbers):
         return None
