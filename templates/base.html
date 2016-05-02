@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load bootstrap_themes compressed account i18n %}
+{% load bootstrap_themes pipeline account i18n %}
 <html>
 <head lang="en">
     <meta charset="utf-8">
@@ -9,15 +9,16 @@
 
     <!-- Styles -->
     {% block stylesheets %}
-        {% bootstrap_styles theme='simplex' type='min.css' %}
-        {% compressed_css 'com_local' %}
+        {% bootstrap_styles theme='flatly' type='min.css' %}
+        {% stylesheet 'datatables' %}
+        {% stylesheet 'com_local' %}
     {% endblock stylesheets %}
 
     {% block header_js %}
-        {% compressed_js 'html5' %}
+        {% javascript 'html5' %}
     {% endblock %}
 </head>
-<body>
+<body style="padding-top: 70px !important;">
     {% if user.is_authenticated %}
     <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -70,9 +71,11 @@
     </div>
 
     {% block footer_js %}
-        {% django_js %}
+        {% javascript 'components' %}
+
         {% bootstrap_script use_min=True %}
-        {% compressed_js 'datatables' %}
+        {% javascript 'datatables' %}
+        {% javascript 'app' %}
     {% endblock %}
     {% block footer_extra_js %}{% endblock footer_extra_js %}
 </body>

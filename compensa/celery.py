@@ -15,6 +15,7 @@ app = Celery('compensa')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
+'''
 app.conf.update(
     CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
 )
@@ -22,6 +23,7 @@ app.conf.update(
 app.conf.update(
     CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend',
 )
+'''
 
 
 @app.task(bind=True)

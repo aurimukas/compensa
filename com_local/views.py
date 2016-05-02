@@ -13,12 +13,10 @@ from .models import Car, Request
 from .tasks import get_car_data
 
 from django_datatables_view.base_datatable_view import BaseDatatableView
+#from django.template import add_to_builtins
 
-from eztables.views import DatatablesView
-from django.template import add_to_builtins
-
-add_to_builtins('eztables.templatetags.eztables')
-add_to_builtins('djangojs.templatetags.js')
+#add_to_builtins('eztables.templatetags.eztables')
+#add_to_builtins('djangojs.templatetags.js')
 
 @login_required()
 def index(request):
@@ -68,7 +66,7 @@ class RequestCarsList(LoginRequiredMixin, SingleObjectMixin, ListView):
         return context
 
 
-class RequestsView(LoginRequiredMixin, DatatablesView):
+class RequestsView(LoginRequiredMixin):
     model = Request
     fields = {
         'code': 'code',
@@ -105,7 +103,6 @@ class RequestsViewJson(LoginRequiredMixin, BaseDatatableView):
 
 def _run_cars_data_update_tasks(req):
     reg_numbers = req.requested_reg_numbers.all()
-    #print reg_numbers
 
     if not len(reg_numbers):
         return None
@@ -114,5 +111,6 @@ def _run_cars_data_update_tasks(req):
         new_car = Car()
         new_car.request = req
         new_car.car_reg = nr.name
+        new_car.save()
         req.car_set.add(new_car)
-        get_car_data.apply_async(args=(new_car,))
+        get_car_data.apply_async(args=(new_car.id,))

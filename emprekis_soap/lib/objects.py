@@ -89,8 +89,9 @@ class MotorInsurance(object):
 
     def GetCarOwnerData(self, NumberType=None, PersonalCode='', VehicleNumber="",
                         PersonType=0, IsSearch=False):
-        #print "vehicle nr {0}".format(VehicleNumber), "type: {0}".format(type(VehicleNumber))
+        print("vehicle nr {0}".format(VehicleNumber), "type: {0}".format(type(VehicleNumber)))
         client = self.create_client()
+        print("Client:", client)
         vehicleNumberType = client.factory.create('VehicleNumberType')
 
         request = client.factory.create('RequestOfGetCarAndOwnerDataArgs')

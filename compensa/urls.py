@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     url(r'^$', 'com_local.views.index', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -10,11 +10,9 @@ urlpatterns = patterns('',
 
     url(r'^accounts/', include('allauth.urls')),
 
-    url(r'^djangojs/', include('djangojs.urls')),
-
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
-)
+]
 
 if settings.DEBUG:
     urlpatterns += patterns(

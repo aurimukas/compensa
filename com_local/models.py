@@ -21,8 +21,8 @@ class Request(models.Model):
     user = models.ForeignKey(User, verbose_name=_("User"), blank=True)
     code = models.CharField(verbose_name=_('Code'), max_length=32, default=None)
     requested_reg_numbers = TaggableManager(verbose_name=_('Car Reg. Number'), help_text=_("A comma-separated list of reg. numbers."))
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Created'), default=timezone.now())
-    updated = models.DateTimeField(auto_now=True, verbose_name=_('Updated'), default=timezone.now())
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Created'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('Updated'))
 
     def __unicode__(self):
         return unicode(_("User: %s, Requested for code: %s" % (self.user, self.code)))
@@ -87,20 +87,19 @@ class Car(models.Model):
     model = models.CharField(verbose_name=_('Model'), max_length=256, default='', null=True, blank=True)
     car_reg = models.CharField(verbose_name=_('Car reg. number'), max_length=16, default=None, null=True, blank=True)
     vin = models.CharField(verbose_name=_('VIN number'), max_length=32, default=None, null=True, blank=True)
-    production_year = models.SmallIntegerField(verbose_name=_('Construction year'), max_length=8, default=None, null=True, blank=True)
+    production_year = models.SmallIntegerField(verbose_name=_('Construction year'), default=None, null=True, blank=True)
     first_registration_date = models.DateTimeField(verbose_name=_('First Registration'), default=None, null=True, blank=True)
-    capicity = models.IntegerField(verbose_name=_('cm3'), max_length=8, default=None, null=True, blank=True)
-    power = models.IntegerField(verbose_name=_('KW'), max_length=8, default=None, null=True, blank=True)
+    capicity = models.IntegerField(verbose_name=_('cm3'), default=None, null=True, blank=True)
+    power = models.IntegerField(verbose_name=_('KW'), default=None, null=True, blank=True)
     price = models.DecimalField(verbose_name=_('Price'), max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     type = models.CharField(verbose_name=_('Vehicle Category Name'), max_length=16, default='', blank=True, null=True)
     type_id = models.CharField(verbose_name=_('Vehicle Category id'), max_length=32, default='', blank=True, null=True)
     weight = models.DecimalField(verbose_name=_('Weight'), max_digits=8, decimal_places=3, default=None, null=True, blank=True)
-    seats = models.SmallIntegerField(verbose_name=_('Seats'), max_length=4, default=None, blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Created'), default=timezone.now())
-    updated = models.DateTimeField(auto_now=True, verbose_name=_('Updated'), default=timezone.now())
+    seats = models.SmallIntegerField(verbose_name=_('Seats'), default=None, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Created'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('Updated'))
     status = models.SmallIntegerField(
         verbose_name=_('Status'),
-        max_length=4,
         default=STATUS_STARTED,
         blank=True,
         null=False,
@@ -137,7 +136,7 @@ class Car(models.Model):
             data = motor.GetCarOwnerData(PersonalCode=self.request.code, VehicleNumber=self.car_reg)
             #print data
             if 'ErrorMessage' in data:
-                print "Error in SOAP request,", data.ErrorMessage
+                print("Error in SOAP request,", data.ErrorMessage)
                 self.status = self.STATUS_ERROR
             else:
                 car = data.Data.Contract.Car

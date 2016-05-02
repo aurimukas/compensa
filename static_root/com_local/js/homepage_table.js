@@ -1,7 +1,7 @@
 /**
  * Created by aurimas on 30/11/14.
  */
-(function($, Django, ComLocal) {
+(function($) {
 
     "use strict";
 
@@ -23,12 +23,15 @@
             "processing": true,
             //"bServerSide": true,
             "serverSide": true,
+            'order': [[2, 'desc']],
+            'pageLength': 30,
             //"sAjaxSource": Django.url('com_local:request_list')
             "ajax": {
-                "url": Django.url('com_local:request_list'),
-                "type": "POST"
+                //"url": Django.url('com_local:request_list'),
+                "url": "/compensa/request/list/",
+                "type": "GET"
             }
         });
     });
 
-}(window.jQuery, window.Django, window.ComLocal));
+}(jQuery));

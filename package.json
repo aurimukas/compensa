@@ -1,0 +1,23 @@
+{
+  "name": "compensa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "init": "./node_modules/bower/bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurimukas/compensa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aurimukas/compensa/issues"
+  },
+  "homepage": "https://github.com/aurimukas/compensa#readme",
+  "description": "",
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

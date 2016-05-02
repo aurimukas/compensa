@@ -46,7 +46,6 @@ docs/_build/
 *.orig
 *.pyc
 *.rej
-.installed.cfg
 __minitage__*
 bin/*
 develop-eggs
@@ -55,8 +54,11 @@ eggs
 log
 parts
 media/uploads
+/bower_components
+/node_modules
 tmp
 compensa/settings/local*
 .DS_Store
+/celerybeat-schedule
 .sass-cache
 .idea
